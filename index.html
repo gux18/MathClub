@@ -10,8 +10,17 @@
     <h1 class="title">수학 동아리</h1>
 
     <h2>논리 게이트</h2>
-    <div id="gates">
-        <canvas id="gateCanvas" width="900" height="350"></canvas>
+        <label for="gateSelect">게이트 선택 :</label>
+        <select id="gateSelect">
+            <option value="not">NOT 게이트</option>
+            <option value="and">AND 게이트</option>
+            <option value="or">OR 게이트</option>
+            <option value="xor">XOR 게이트</option>
+            <option value="nand">NAND 게이트</option>
+            <option value="nor">NOR 게이트</option>
+        </select>
+    <div>
+        <canvas id="gateCanvas" width="400" height="250"></canvas>
     </div>
 
     <h2>가산기</h2>

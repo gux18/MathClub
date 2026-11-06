@@ -17,25 +17,35 @@ imgs.nor.src = 'image/nor.png';
 
 let imgWidth = 100;
 let imgHeight = 100;
-let distantX = 100;
-let distantY = 150;
-let offsetX = 30;
-let offsetY = 30;
-imgs.not.onload = function() {
-    gateCtx.drawImage(imgs.not, offsetX, offsetY, imgWidth, imgHeight);
-};
-imgs.and.onload = function() {
-    gateCtx.drawImage(imgs.and, distantX + offsetX, offsetY, imgWidth, imgHeight);
-};
-imgs.or.onload = function() {
-    gateCtx.drawImage(imgs.or, distantX * 2 + offsetX, offsetY, imgWidth, imgHeight);
-};
-imgs.xor.onload = function() {
-    gateCtx.drawImage(imgs.xor, offsetX, distantY + offsetY, imgWidth, imgHeight);
-};
-imgs.nand.onload = function() {
-    gateCtx.drawImage(imgs.nand, distantX + offsetX, distantY + offsetY, imgWidth, imgHeight);
-};
-imgs.nor.onload = function() {
-    gateCtx.drawImage(imgs.nor, distantX * 2 + offsetX, distantY + offsetY, imgWidth, imgHeight);
-};
+let offsetX = 150;
+let offsetY = 75;
+
+const gateSelect = document.getElementById('gateSelect');
+
+function drawSelectedGate() {
+    const loadingImage = imgs[gateSelect.value];
+    gateCtx.clearRect(0, 0, gateCanvas.width, gateCanvas.height);
+    if (loadingImage.complete && loadingImage.naturalWidth > 0) {
+        gateCtx.drawImage(loadingImage, offsetX, offsetY, imgWidth, imgHeight);
+    }
+}
+
+Object.values(imgs).forEach(image => {
+    image.addEventListener('load', () => {
+        if (imgs[gateSelect.value] === image) {
+            drawSelectedGate();
+        }
+    });
+});
+
+gateSelect.addEventListener('change', drawSelectedGate);
+drawSelectedGate();
+
+function drawWire() {
+    if (gateSelect.value === 'not') {
+        //입력 1개, 출력 1개
+    }
+    else {
+        //입력 2개, 출력 1개
+    }
+}

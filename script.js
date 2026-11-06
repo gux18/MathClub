@@ -17,24 +17,24 @@ imgs.nor.src = 'image/nor.png';
 
 let imgWidth = 100;
 let imgHeight = 100;
-let imgX = 250;
-let imgY = 0;
-
+let imgX = 100;
+let imgY = 150;
+// 오프셋도 추가해서 제대로 조정
 imgs.not.onload = function() {
     gateCtx.drawImage(imgs.not, imgX, 0, imgWidth, imgHeight);
 };
 imgs.and.onload = function() {
-    gateCtx.drawImage(imgs.and, imgX, imgY, imgWidth, imgHeight);
+    gateCtx.drawImage(imgs.and, imgX * 2, 0, imgWidth, imgHeight);
 };
 imgs.or.onload = function() {
-    gateCtx.drawImage(imgs.or, 200, 0, imgWidth, imgHeight);
+    gateCtx.drawImage(imgs.or, imgX * 3, 0, imgWidth, imgHeight);
 };
 imgs.xor.onload = function() {
-    gateCtx.drawImage(imgs.xor, 0, 100, imgWidth, imgHeight);
+    gateCtx.drawImage(imgs.xor, imgX, imgY, imgWidth, imgHeight);
 };
 imgs.nand.onload = function() {
-    gateCtx.drawImage(imgs.nand, 100, 100, imgWidth, imgHeight);
+    gateCtx.drawImage(imgs.nand, imgX * 2, imgY, imgWidth, imgHeight);
 };
 imgs.nor.onload = function() {
-    gateCtx.drawImage(imgs.nor, 200, 100, imgWidth, imgHeight);
+    gateCtx.drawImage(imgs.nor, imgX * 3, imgY, imgWidth, imgHeight);
 };

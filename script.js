@@ -24,10 +24,12 @@ const gateSelect = document.getElementById('gateSelect');
 
 function drawSelectedGate() {
     const loadingImage = imgs[gateSelect.value];
-    gateCtx.clearRect(0, 0, gateCanvas.width, gateCanvas.height);
+    gateCtx.clearRect(30, offsetY, imgWidth, imgHeight);
     if (loadingImage.complete && loadingImage.naturalWidth > 0) {
         gateCtx.drawImage(loadingImage, offsetX, offsetY, imgWidth, imgHeight);
     }
+
+    drawWire();
 }
 
 Object.values(imgs).forEach(image => {
@@ -42,10 +44,17 @@ gateSelect.addEventListener('change', drawSelectedGate);
 drawSelectedGate();
 
 function drawWire() {
+    //입력 부분
     if (gateSelect.value === 'not') {
-        //입력 1개, 출력 1개
+        //1개
+        gateCtx.beginPath();
+        gateCtx.moveTo(30, 125);
+        gateCtx.lineTo(150, 125);
+        gateCtx.stroke();
     }
     else {
-        //입력 2개, 출력 1개
+        //2개
     }
+
+    //출력 부분
 }

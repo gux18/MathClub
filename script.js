@@ -22,9 +22,12 @@ let offsetY = 75;
 
 const gateSelect = document.getElementById('gateSelect');
 
-function drawSelectedGate() {
-    const loadingImage = imgs[gateSelect.value];
-    gateCtx.clearRect(30, offsetY, imgWidth, imgHeight);
+function drawGate(gateType) {
+    drawWire();
+
+    const loadingImage = imgs[gateType];
+    gateCtx.clearRect(30, offsetY, 270, imgHeight);
+
     if (loadingImage.complete && loadingImage.naturalWidth > 0) {
         gateCtx.drawImage(loadingImage, offsetX, offsetY, imgWidth, imgHeight);
     }
@@ -35,13 +38,16 @@ function drawSelectedGate() {
 Object.values(imgs).forEach(image => {
     image.addEventListener('load', () => {
         if (imgs[gateSelect.value] === image) {
-            drawSelectedGate();
+            drawGate('not');
         }
     });
 });
 
-gateSelect.addEventListener('change', drawSelectedGate);
-drawSelectedGate();
+gateSelect.addEventListener('change', (event) => {
+    drawGate(event.currentTarget.value);
+});
+
+
 
 function drawWire() {
     //입력 부분
@@ -54,7 +60,20 @@ function drawWire() {
     }
     else {
         //2개
+        gateCtx.beginPath();
+        gateCtx.moveTo(30, 100);
+        gateCtx.lineTo(160, 100);
+        gateCtx.stroke();
+
+        gateCtx.beginPath();
+        gateCtx.moveTo(30, 150);
+        gateCtx.lineTo(160, 150);
+        gateCtx.stroke();
     }
 
     //출력 부분
+    gateCtx.beginPath();
+    gateCtx.moveTo(250, 125);
+    gateCtx.lineTo(300, 125);
+    gateCtx.stroke();
 }

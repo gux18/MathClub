@@ -1,3 +1,4 @@
+// 기본 설정
 const canvases = {
     not: document.getElementById('notGateCanvas'),
     and: document.getElementById('andGateCanvas'),
@@ -31,6 +32,7 @@ const switchImgs = {
 switchImgs.On.src = '../image/onSwitch.jpg';
 switchImgs.Off.src = '../image/offSwitch.jpg';
 
+// 게이트, 스위치 이미지 그리기
 for (const gate in gateImgs) {
     gateImgs[gate].src = `../image/${gate}.png`;
 
@@ -40,20 +42,20 @@ for (const gate in gateImgs) {
 }
 
 switchImgs.Off.onload = () => {
-    for (const ctx in ctxs) {
-        if (ctx == 'not') {
-            ctxs[ctx].drawImage(switchImgs.Off, imgOffsetX.switch.input, imgOffsetY.switch.mid, imgSize.switch.width, imgSize.switch.height);
-            ctxs[ctx].drawImage(switchImgs.Off, imgOffsetX.switch.output, imgOffsetY.switch.mid, imgSize.switch.width, imgSize.switch.height);
+    for (const gateCtx in ctxs) {
+        if (gateCtx == 'not') {
+            ctxs[gateCtx].drawImage(switchImgs.Off, imgOffsetX.switch.input, imgOffsetY.switch.mid, imgSize.switch.width, imgSize.switch.height);
+            ctxs[gateCtx].drawImage(switchImgs.Off, imgOffsetX.switch.output, imgOffsetY.switch.mid, imgSize.switch.width, imgSize.switch.height);
         }
         else {
-            ctxs[ctx].drawImage(switchImgs.Off, imgOffsetX.switch.input, imgOffsetY.switch.top, imgSize.switch.width, imgSize.switch.height);
-            ctxs[ctx].drawImage(switchImgs.Off, imgOffsetX.switch.input, imgOffsetY.switch.bottom, imgSize.switch.width, imgSize.switch.height);
-            ctxs[ctx].drawImage(switchImgs.Off, imgOffsetX.switch.output, imgOffsetY.switch.mid, imgSize.switch.width, imgSize.switch.height);
+            ctxs[gateCtx].drawImage(switchImgs.Off, imgOffsetX.switch.input, imgOffsetY.switch.top, imgSize.switch.width, imgSize.switch.height);
+            ctxs[gateCtx].drawImage(switchImgs.Off, imgOffsetX.switch.input, imgOffsetY.switch.bottom, imgSize.switch.width, imgSize.switch.height);
+            ctxs[gateCtx].drawImage(switchImgs.Off, imgOffsetX.switch.output, imgOffsetY.switch.mid, imgSize.switch.width, imgSize.switch.height);
         }
     }
 };
 
-//계수조정
+//세부조정
 const imgSize = {
     gate : 100,
     switch : {
@@ -76,3 +78,30 @@ const imgOffsetY = {
         bottom : 150 
     }
 };
+
+//입력 처리
+for (const gateCtx in ctxs) {
+
+    ctxs[gateCtx].canvas.addEventListener('click', (event) => {
+        const rect = ctxs[gateCtx].canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        let inputClicked = {
+            top : x >= imgOffsetX.switch.input && x <= imgOffsetX.switch.input + imgSize.switch.width && y >= imgOffsetY.switch.top && y <= imgOffsetY.switch.top + imgSize.switch.height,
+            mid : x >= imgOffsetX.switch.input && x <= imgOffsetX.switch.input + imgSize.switch.width && y >= imgOffsetY.switch.mid && y <= imgOffsetY.switch.mid + imgSize.switch.height,
+            bottom : x >= imgOffsetX.switch.input && x <= imgOffsetX.switch.input + imgSize.switch.width && y >= imgOffsetY.switch.bottom && y <= imgOffsetY.switch.bottom + imgSize.switch.height
+        }
+
+        if (gateCtx == 'not' && inputClicked.mid) {
+            calculate('not', true, false);
+        }
+    });
+}
+
+function calculate(gateType, input1, input2) { //input은 불리언 | not의 경우 input2 처리하지 않음
+    if (gateType == 'not') {
+        console.log(!input1);
+    }
+}
+//스위치 상태 저장하는 기능 추가해야 함
